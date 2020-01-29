@@ -26,6 +26,7 @@ namespace Project.API.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            //add some changes
             //throw new Exception("Generujemy wyjatek");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
