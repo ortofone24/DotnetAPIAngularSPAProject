@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Project.API.Data;
 
 namespace Project.API.Controllers
 {
@@ -11,6 +12,8 @@ namespace Project.API.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly DataContext _dataContext;
+             
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -18,9 +21,10 @@ namespace Project.API.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, DataContext context)
         {
             _logger = logger;
+            _dataContext = context;
         }
 
         [HttpGet]
