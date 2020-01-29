@@ -7,6 +7,7 @@ namespace Project.API.Models
 {
     public class Value
     {
+        //test purpose
         public int Id { get; set; }
         public string Name { get; set; }
     }
