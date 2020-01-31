@@ -33,6 +33,7 @@ namespace Project.API
             services.AddControllers();
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddCors();
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
