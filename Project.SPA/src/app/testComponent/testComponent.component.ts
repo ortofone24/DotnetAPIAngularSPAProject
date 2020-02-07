@@ -14,6 +14,8 @@ export class TestComponentComponent implements OnInit {
 
 
 
-  setValue() { this.name = 'Nancy'; }
+  setValue() {
+    this.name = 'Nancy';
+  }
 
 }
