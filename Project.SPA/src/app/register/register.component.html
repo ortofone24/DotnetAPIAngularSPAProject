@@ -1,4 +1,5 @@
 <form #registerForm="ngForm" (ngSubmit)="register()">
+  
   <h2 class="text-center text-primary">Zapisz się</h2>
   <hr>
 
@@ -14,7 +15,7 @@
   <div class="form-group">
     <label for="favouriteValue">Jaka jest twoja ulubiona wartość?</label>
     <select class="form-control" id="favouriteValue">
-    <option *ngFor="let value of valuesFromHome" [value]="value">{{ value }}</option>
+    <option *ngFor="let value of valuesFromHome" [value]="value">{{ value.name }}</option>
     </select>
   </div>
 
