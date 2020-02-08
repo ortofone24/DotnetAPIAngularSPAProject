@@ -12,9 +12,10 @@
   <div *ngIf="registerMode" class="container">
     <div class="row justify-content-center">
       <div class="col-4">
-        <app-register [valuesFromHome] ="values" (cancelRegister)="cancelRegisterMode($event)"></app-register> 
+        <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register> 
         <!--Wywołanie innego komponentu w komponencie (rodzic - potomek)  .. oraz przekazanie wartości z obiektu value(Rodzica) 
           do dziecka[valuesFromHome]
+        [valuesFromHome] ="values" to sie tyczy inputa
         [] - dane wejściowe 
         () - dane wyjściowe-->
       </div>
