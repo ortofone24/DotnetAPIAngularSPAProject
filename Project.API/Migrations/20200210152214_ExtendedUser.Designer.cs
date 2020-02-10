@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.API.Data;
 
 namespace Project.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200210152214_ExtendedUser")]
+    partial class ExtendedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace Project.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Project.API.Models.Photo", b =>
+            modelBuilder.Entity("Project.API.Data.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +50,7 @@ namespace Project.API.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("Project.API.Models.User", b =>
+            modelBuilder.Entity("Project.API.Data.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +84,7 @@ namespace Project.API.Migrations
                     b.Property<string>("FreeTime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FriendeWouldDescribeMe")
+                    b.Property<string>("FriendsWouldDescribeMe")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
@@ -171,9 +173,9 @@ namespace Project.API.Migrations
                     b.ToTable("Values");
                 });
 
-            modelBuilder.Entity("Project.API.Models.Photo", b =>
+            modelBuilder.Entity("Project.API.Data.Photo", b =>
                 {
-                    b.HasOne("Project.API.Models.User", "User")
+                    b.HasOne("Project.API.Data.User", "User")
                         .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

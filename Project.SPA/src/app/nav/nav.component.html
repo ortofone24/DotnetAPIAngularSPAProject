@@ -17,7 +17,7 @@
 
     <div *ngIf="loggedIn()" class="dropdown">
       <a class="dropdown-toggle text-light">
-        Witaj {{ authService.decodedToken?.unique_name | titlecase}} <!--aby pierwsza litera była duża-->
+        Witaj {{ authService.decodedToken?.unique_name | titlecase}} <!-- | aby pierwsza litera była duża-->
       </a>
     
       <div class="dropdown-menu">
