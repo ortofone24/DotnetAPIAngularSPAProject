@@ -27,6 +27,9 @@ namespace Project.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
+
+            throw new Exception("Generujemy recznie blad");
+
             var users = await _userRepository.GetUsers();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
