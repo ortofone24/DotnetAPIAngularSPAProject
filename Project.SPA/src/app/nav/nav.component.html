@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" [routerLink]="['/home']">Portal Randkowy</a>
-    <ul class="navbar-nav mr-auto">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="['/home']">Portal Randkowy</a>
+
+    <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item active" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/uzytkownicy']">Użytkownicy</a>
       </li>
@@ -17,9 +19,10 @@
 
     <div *ngIf="loggedIn()" class="dropdown">
       <a class="dropdown-toggle text-light">
-        Witaj {{ authService.decodedToken?.unique_name | titlecase}} <!-- | aby pierwsza litera była duża-->
+        Witaj {{ authService.decodedToken?.unique_name | titlecase}}
+        <!-- | aby pierwsza litera była duża-->
       </a>
-    
+
       <div class="dropdown-menu">
         <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Edytuj profil</a>
         <div class="dropdown-divider"></div>
@@ -28,10 +31,14 @@
     </div>
 
     <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
-      <input class="form-control mr-sm-2" type="text" placeholder="Uzytkownik" [(ngModel)]="model.username" name="username" required #username="ngModel">
-      <input class="form-control mr-sm-2" type="password" placeholder="Haslo" [(ngModel)]="model.password" name="password" required #password="ngModel">
+      <input class="form-control mr-sm-2" type="text" placeholder="Uzytkownik" [(ngModel)]="model.username"
+        name="username" required #username="ngModel">
+      <input class="form-control mr-sm-2" type="password" placeholder="Haslo" [(ngModel)]="model.password"
+        name="password" required #password="ngModel">
       <button [disabled]="!loginForm.valid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Zaloguj</button>
     </form>
+
+  </div>
 </nav>
 
 <!--
