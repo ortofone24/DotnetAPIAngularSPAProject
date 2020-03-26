@@ -26,6 +26,9 @@ import { UserDetailComponent } from './users/user-list/user-detail/user-detail.c
 import { UserDetailResolver } from './_resolvers/user-detail.resolver';
 import { UserListResolver } from './_resolvers/user-list.resolver';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { UserEditComponent } from './users/user-list/user-edit/user-edit.component';
+import { UserEditResolver } from './_resolvers/user-edit.resolver';
+
 
 export class CustomHammerConfig extends HammerGestureConfig  {
    overrides = {
@@ -48,7 +51,8 @@ export function tokenGetter() {
       LikesComponent,
       MessagesComponent,
       UserCardComponent,
-      UserDetailComponent
+      UserDetailComponent,
+      UserEditComponent
    ],
    imports: [
       BrowserModule,
@@ -75,7 +79,8 @@ export function tokenGetter() {
       ErrorInterceptorProvider,
       UserDetailResolver,
       UserListResolver,
-      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
+      UserEditResolver
    ],
    bootstrap: [
       AppComponent
