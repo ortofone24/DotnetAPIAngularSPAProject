@@ -28,6 +28,7 @@ import { UserListResolver } from './_resolvers/user-list.resolver';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { UserEditComponent } from './users/user-list/user-edit/user-edit.component';
 import { UserEditResolver } from './_resolvers/user-edit.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -80,7 +81,8 @@ export function tokenGetter() {
       UserDetailResolver,
       UserListResolver,
       { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
-      UserEditResolver
+      UserEditResolver,
+      PreventUnsavedChanges
    ],
    bootstrap: [
       AppComponent
