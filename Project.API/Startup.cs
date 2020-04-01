@@ -44,6 +44,7 @@ namespace Project.API
                     });  // to think about it
 
             services.AddCors();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("ClaudinarySettings"));
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
