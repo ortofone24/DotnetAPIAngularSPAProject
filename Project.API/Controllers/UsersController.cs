@@ -6,6 +6,7 @@ using Project.API.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Project.API.Controllers
@@ -44,5 +45,26 @@ namespace Project.API.Controllers
 
             return Ok(userToReturn);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) 
+            {
+                return Unauthorized();
+            }
+
+            var userFromRepo = await _userRepository.GetUser(id);
+
+            _mapper.Map(userForUpdateDto, userFromRepo);
+
+            if(await _userRepository.SaveAll())
+            {
+                return NoContent();
+            }
+
+            throw new Exception($"Aktualizacja uzytkownika o id: {id} nie powiodła się");
+        }
+
     }
 }
