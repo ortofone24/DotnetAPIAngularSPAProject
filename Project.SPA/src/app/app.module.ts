@@ -29,6 +29,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { UserEditComponent } from './users/user-list/user-edit/user-edit.component';
 import { UserEditResolver } from './_resolvers/user-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotosComponent } from './users/photos/photos.component';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -53,7 +54,8 @@ export function tokenGetter() {
       MessagesComponent,
       UserCardComponent,
       UserDetailComponent,
-      UserEditComponent
+      UserEditComponent,
+      PhotosComponent
    ],
    imports: [
       BrowserModule,
