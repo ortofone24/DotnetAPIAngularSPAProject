@@ -43,7 +43,17 @@ namespace Project.API
                         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     });  // to think about it
 
-            services.AddCors();
+
+            services.AddCors(o => {
+                o.AddPolicy("AllowSetOrigins", options =>
+                {
+                    options.WithOrigins("http://localhost:4200");
+                    options.AllowAnyHeader();
+                    options.AllowAnyMethod();
+                    options.AllowCredentials();
+                });
+            });
+
             services.Configure<CloudinarySettings>(Configuration.GetSection("ClaudinarySettings"));
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<Seed>();
@@ -89,22 +99,22 @@ namespace Project.API
 
             seeder.SeedUsers();
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-
+            app.UseCors("AllowSetOrigins");  //AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            
             app.UseAuthentication();
 
             app.UseMvc();
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
-            app.UseRouting();
+            // app.UseRouting();
 
-            app.UseAuthorization();
+            // app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         }
     }
 }

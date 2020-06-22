@@ -32,5 +32,17 @@ namespace Project.API.Data
             var photo = await _context.Photos.FirstOrDefaultAsync(p => p.Id == id);
             return photo;
         }
+
+        public async Task<Photo> GetMainPhotoForUser(int userId)
+        {
+            // var mainPhotoList = await _context.Photos.Where(u => u.UserId == userId).ToListAsync();
+
+            // TODO wyselekcjonowac gdzie isMain jest true;
+            // var mainPhoto = mainPhotoList.FirstOrDefault(s => s.IsMain == true);
+
+            return await _context.Photos.Where(u => u.UserId == userId).FirstOrDefaultAsync(s => s.IsMain);
+
+            // return mainPhoto;
+        }
     }
 }

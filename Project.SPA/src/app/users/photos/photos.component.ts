@@ -60,5 +60,7 @@ export class PhotosComponent implements OnInit {
         autoUpload: false,
         maxFileSize: 10 * 1024 * 1024
     });
+
+    this.uploader.onAfterAddingAll = (file) => { file.withCredentials = false; };
   }
 }
