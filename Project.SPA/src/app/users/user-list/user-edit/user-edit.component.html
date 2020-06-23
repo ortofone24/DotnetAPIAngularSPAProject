@@ -135,7 +135,9 @@
                 [(ngModel)]="user.friendeWouldDescribeMe"></textarea>
             </tab>
             <tab heading="Zdjęcia">
-              <app-photos [photos]="user.photos"></app-photos>
+              <app-photos [photos]="user.photos" 
+                          (getUserPhotoChange)="updateMainPhoto($event)">
+              </app-photos>
             </tab>
           </tabset>
         </div>
