@@ -3,6 +3,8 @@ import { Photo } from '../../_models/photo';   // 'src/app/_models/photo' sciezk
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/_services/auth.service';
+import { UserService } from 'src/app/_services/user.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-photos',
@@ -15,6 +17,7 @@ export class PhotosComponent implements OnInit {
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
   baseUrl = environment.apiUrl;
+  currentMain: Photo;
 
   // hasAnotherDropZoneOver: boolean;
   response: string;
@@ -41,7 +44,9 @@ export class PhotosComponent implements OnInit {
   //   this.uploader.response.subscribe(res => this.response = res);
   // }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private userService: UserService,
+              private alertify: AlertifyService) {}
 
   ngOnInit() {
     this.initializeUploader();
@@ -63,4 +68,17 @@ export class PhotosComponent implements OnInit {
 
     this.uploader.onAfterAddingAll = (file) => { file.withCredentials = false; };
   }
+
+  setMainPhoto(photo: Photo) {
+    this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id).subscribe(() => {
+      console.log('Sukces, zdjecie ustawione jako glowne');
+      this.currentMain = this.photos.filter(p => p.isMain === true)[0];
+      this.currentMain.isMain = false;
+      photo.isMain = true;
+
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
+
 }
