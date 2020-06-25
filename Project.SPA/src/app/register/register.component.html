@@ -1,14 +1,19 @@
-<form #registerForm="ngForm" (ngSubmit)="register()">
-  
+<!-- <form #registerForm="ngForm" (ngSubmit)="register()"> -->
+<form [formGroup]="registerForm" (ngSubmit)="register()">
   <h2 class="text-center text-primary">Zapisz się</h2>
-  <hr>
+  <hr />
 
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Nazwa użytkownika" required name="username" [(ngModel)]="model.username"> 
+    <input type="text" class="form-control" placeholder="Nazwa użytkownika" formControlName="username"/>
     <!--Bindowanie do pola model z componentu register -->
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" placeholder="Hasło" name="password" [(ngModel)]="model.password">
+    <input type="password" class="form-control" placeholder="Hasło" formControlName="password"/>
+    <!--Bindowanie do pola model z componentu register -->
+  </div>
+
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="Potwierdź hasło" formControlName="confirmPassword"/>
     <!--Bindowanie do pola model z componentu register -->
   </div>
 
@@ -20,10 +25,21 @@
     </select>
   </div>
   -->
-  
+
   <div class="form-group text-center">
     <button class="btn btn-success" type="submit">Rejestracja</button>
-    <button class="btn btn-default" type="button" (click)="cancel()">Anuluj</button>
+    <button class="btn btn-default" type="button" (click)="cancel()">
+      Anuluj
+    </button>
   </div>
-
 </form>
+
+<p>
+  wartości z formularza
+  {{registerForm.value | json}}
+</p>
+
+<p>
+  statusy z formularza
+  {{registerForm.status | json}}
+</p>
