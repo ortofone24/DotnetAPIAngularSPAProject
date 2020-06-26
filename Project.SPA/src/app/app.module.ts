@@ -32,6 +32,7 @@ import { UserEditComponent } from './users/user-list/user-edit/user-edit.compone
 import { UserEditResolver } from './_resolvers/user-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotosComponent } from './users/photos/photos.component';
+import { TimeAgoPipe } from './_pipes/time-age-pipe';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -57,7 +58,8 @@ export function tokenGetter() {
       UserCardComponent,
       UserDetailComponent,
       UserEditComponent,
-      PhotosComponent
+      PhotosComponent,
+      TimeAgoPipe
    ],
    imports: [
       BrowserModule,
