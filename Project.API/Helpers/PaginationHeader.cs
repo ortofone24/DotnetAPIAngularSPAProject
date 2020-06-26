@@ -7,10 +7,10 @@ namespace Project.API.Helpers
 {
     public class PaginationHeader
     {
-        public int CurrentPage { get; set; }
-        public int ItemsPerPage { get; set; }
-        public int TotalItems { get; set; }
-        public int TotalPages { get; set; }
+        public int CurrentPage { get; set; }     //numer wybranej strony
+        public int ItemsPerPage { get; set; }    //rozmiar strony czyli ile elementow na stronie
+        public int TotalItems { get; set; }      //całkowita liczba elementów
+        public int TotalPages { get; set; }      //łączna liczba stron
 
         public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
