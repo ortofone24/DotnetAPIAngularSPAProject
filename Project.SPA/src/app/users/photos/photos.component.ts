@@ -69,7 +69,29 @@ export class PhotosComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingAll = (file) => { file.withCredentials = false; };
+
+    this.uploader.onSuccessItem = (item, respons, status, headres) => {
+      if (respons) {
+        const res: Photo = JSON.parse(respons);
+        const photo = {
+          id: res.id,
+          url: res.url,
+          dateAdded: res.dateAdded,
+          description: res.description,
+          isMain: res.isMain
+        };
+        this.photos.push(photo);
+
+        if (photo.isMain) {
+          this.authService.changeUserPhoto(photo.url);
+          this.authService.currentUser.photoUrl = photo.url;
+          localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+        }
+      }
+    };
   }
+
+
 
   setMainPhoto(photo: Photo) {
     this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id).subscribe(() => {
