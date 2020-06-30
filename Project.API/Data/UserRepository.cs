@@ -39,7 +39,7 @@ namespace Project.API.Data
                 users = users.Where(u => u.DateOfBirth >= minDate && u.DateOfBirth <= maxDate);
             }
 
-            if(userParams.ZodiacSign != null)
+            if(userParams.ZodiacSign != "Wszystkie")
             {
                 users = users.Where(u => u.ZodiacSign == userParams.ZodiacSign);
             }
