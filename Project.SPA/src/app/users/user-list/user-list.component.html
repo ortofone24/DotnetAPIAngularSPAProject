@@ -1,6 +1,7 @@
 <div class="container mt-4">
   <div class="row">
-    <div class="col-lg-12"> <!--niezaleznie od wielkosci ekranu ma byc na cala szerokosc wiec nie trzeba deklarowac pozostalych klas bs-->
+    <div class="col-lg-12">
+      <!--niezaleznie od wielkosci ekranu ma byc na cala szerokosc wiec nie trzeba deklarowac pozostalych klas bs-->
       <a href="http://dev-hobby.pl">
         <img src="../../../assets/banerPoziom.png" alt="miejsce na baner reklamowy" class="card-img-top">
       </a>
@@ -28,13 +29,24 @@
     </div>
 
     <div class="col-lg-10 col-md-8 col-sm-6">
-      <!--deklaracaj jak ma wygladac grid i na ilu kolumnach gridu jest wyswietlany-->
+      <!--deklaracja jak ma wygladac grid i na ilu kolumnach gridu jest wyswietlany-->
       <div class="row">
         <div *ngFor="let user of users" class="col-lg-2 col-md-4 col-sm-6">
           <app-user-card [user]="user"></app-user-card><!-- Przekazanie uzytkownika do komponentu app user-->
         </div>
       </div>
-    </div>
+      <pagination [boundaryLinks]="true" 
+                  [totalItems]= "pagination.totalItems"
+                  [itemsPerPage] = "pagination.itemsPerPage"
+                  [(ngModel)] = "pagination.currentPage"
+                  (pageChanged)="pageChanged($event)"
 
+                  previousText="&lsaquo;" 
+                  nextText="&rsaquo;"
+                  firstText="&laquo;" 
+                  lastText="&raquo;">
+
+      </pagination>
+    </div>
   </div>
 </div>

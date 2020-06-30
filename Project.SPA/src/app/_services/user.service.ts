@@ -21,7 +21,34 @@ export class UserService {
 
 constructor(private http: HttpClient) { }
 
-getUsers(page?, itemsPerPage? ): Observable<PaginationResult<User[]>> {
+// moja stara metoda
+// getUsers(page?, itemsPerPage? ): Observable<PaginationResult<User[]>> {
+
+//   // const paginationResult: PaginationResult<User[]> = new PaginationResult<User[]>();
+//   const paginationResult: PaginationResult<User[]> = new PaginationResult<User[]>();
+//   let params = new HttpParams();
+
+//   if (page != null && itemsPerPage != null) {
+//     params = params.append('pageNumber', page);
+//     params = params.append('pageSize', itemsPerPage);
+//   }
+
+//   return this.http.get<User[]>(this.baseUrl + 'users', { observe: 'response', params })
+//               .pipe(
+//                 map(response => {
+//                   paginationResult.result = response.body;
+
+//                   if (response.headers.get('Pagination') != null) {
+//                     // paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+//                     paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+//                   }
+//                   return paginationResult;
+//                 })
+//               );
+//   // return this.http.get<User[]>(this.baseUrl + 'users', httpOptions);
+// }
+
+getUsers(page?, itemsPerPage?, userParams?, likesParam?): Observable<PaginationResult<User[]>> {
 
   const paginationResult: PaginationResult<User[]> = new PaginationResult<User[]>();
   let params = new HttpParams();
@@ -31,18 +58,34 @@ getUsers(page?, itemsPerPage? ): Observable<PaginationResult<User[]>> {
     params = params.append('pageSize', itemsPerPage);
   }
 
-  return this.http.get<User[]>(this.baseUrl + 'users', { observe: 'response', params })
-              .pipe(
-                map(response => {
-                  paginationResult.result = response.body;
+  if (userParams != null) {
+    params = params.append('minAge', userParams.minAge);
+    params = params.append('maxAge', userParams.maxAge);
+    params = params.append('gender', userParams.gender);
+    params = params.append('zodiacSign', userParams.zodiacSign);
+    params = params.append('orderBy', userParams.orderBy);
+  }
 
-                  if (response.headers.get('Pagination') != null) {
-                    paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
-                  }
-                  return paginationResult;
-                })
-              );
-  // return this.http.get<User[]>(this.baseUrl + 'users', httpOptions);
+  if (likesParam === 'UserLikes') {
+    params = params.append('UserLikes', 'true');
+  }
+
+  if (likesParam === 'UserIsLiked') {
+    params = params.append('UserIsLiked', 'true');
+  }
+
+  return this.http.get<User[]>(this.baseUrl + 'users', { observe: 'response', params })
+    .pipe(
+      map(response => {
+        paginationResult.result = response.body;
+
+        if (response.headers.get('Pagination') != null) {
+          paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+
+        return paginationResult;
+      })
+    );
 }
 
 getUser(id: number): Observable<User> {

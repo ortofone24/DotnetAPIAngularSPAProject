@@ -37,7 +37,8 @@ namespace Project.API.Helpers
 
 
             response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));
-            response.Headers.Add("Application-Control-Expose-Headers", "Pagination");
+            // response.Headers.Add("Application-Control-Expose-Headers", "Pagination");
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
         }
     }
 }
