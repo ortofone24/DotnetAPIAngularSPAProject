@@ -54,5 +54,9 @@ namespace Project.API.Models
 
         // Zakładka zdjęcia
         public ICollection<Photo> Photos { get; set; }
+
+        public ICollection<Like> UserLikes { get; set; }    // użytkownik lubi
+
+        public ICollection<Like> UserIsLiked { get; set; }  // użytkownik jest lubiany
     }
 }
