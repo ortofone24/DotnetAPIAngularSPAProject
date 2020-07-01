@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <!--niezaleznie od wielkosci ekranu ma byc na cala szerokosc wiec nie trzeba deklarowac pozostalych klas bs-->
       <a href="http://dev-hobby.pl">
-        <img src="../../../assets/banerPoziom.png" alt="miejsce na baner reklamowy" class="card-img-top">
+        <img src="../../../assets/banerPoziom.png" alt="miejsce na baner reklamowy" class="card-img-top" />
       </a>
     </div>
   </div>
@@ -11,20 +11,19 @@
 
 <div class="container mt-4">
   <div class="row">
-
     <div class="col-lg-2 col-md-4 col-sm-6">
       <!--deklaracaj jak ma wygladac grid i na ilu kolumnach jest wyswietlany-->
       <a href="http://g-way.pl">
-        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top">
+        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top" />
       </a>
       <a href="http://g-way.pl">
-        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top">
+        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top" />
       </a>
       <a href="http://g-way.pl">
-        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top">
+        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top" />
       </a>
       <a href="http://g-way.pl">
-        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top">
+        <img src="../../../assets/banerPion.png" alt="miejsce na baner reklamowy" class="card-img-top" />
       </a>
     </div>
 
@@ -32,61 +31,80 @@
       <!--deklaracja jak ma wygladac grid i na ilu kolumnach gridu jest wyswietlany-->
 
       <div class="text-center mt-3">
-        <h2>Propozycje dla Ciebie - znalezionych pozycji : {{pagination.totalItems}} </h2>
+        <h2>
+          Propozycje dla Ciebie - znalezionych pozycji :
+          {{ pagination.totalItems }}
+        </h2>
       </div>
 
       <form class="form-inline" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
         <div class="form-group">
           <label for="minAge">Wiek od</label>
-          <input type="number" class="form-control ml-1" style="width: 70px" id="minAge" 
-                  [(ngModel)]="userParams.minAge" name="minAge">
-        </div>         
+          <input type="number" class="form-control ml-1" style="width: 70px;" id="minAge"
+            [(ngModel)]="userParams.minAge" name="minAge" />
+        </div>
         <div class="form-group px-2">
           <label for="maxAge">Wiek do</label>
-          <input type="number" class="form-control ml-1" style="width: 75px" id="maxAge" 
-                  [(ngModel)]="userParams.maxAge" name="maxAge">
-        </div>        
+          <input type="number" class="form-control ml-1" style="width: 75px;" id="maxAge"
+            [(ngModel)]="userParams.maxAge" name="maxAge" />
+        </div>
         <div class="form-group px-2">
           <label for="gender">Płeć: </label>
-          <select class="form-control ml-1" style="width: 130px" id="gender" 
-                  [(ngModel)]="userParams.gender" name="gender">
+          <select class="form-control ml-1" style="width: 130px;" id="gender" [(ngModel)]="userParams.gender"
+            name="gender">
             <option *ngFor="let gender of genderList" [value]="gender.value">
               {{ gender.display }}
-            </option>        
+            </option>
           </select>
-        </div>    
+        </div>
         <div class="form-group px-2">
           <label for="gender">Znak: </label>
-          <select class="form-control ml-1" style="width: 130px" id="zodiacSign" 
-                  [(ngModel)]="userParams.zodiacSign" name="zodiacSign">
-            <option *ngFor="let zodiacSign of zodiacSignList" [value]="zodiacSign.value">  
-              {{ zodiacSign.display }}    
-            </option> 
+          <select class="form-control ml-1" style="width: 130px;" id="zodiacSign" [(ngModel)]="userParams.zodiacSign"
+            name="zodiacSign">
+            <option *ngFor="let zodiacSign of zodiacSignList" [value]="zodiacSign.value">
+              {{ zodiacSign.display }}
+            </option>
           </select>
-        </div> 
-        <button type="submit" class="btn btn-primary" style="margin-left:10px">Zastosuj filtr</button>
-        <button  type="button" class="btn btn-info" style="margin-left:10px" (click)="resetFilters()">Zresetuj filtr</button>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">
+          Zastosuj filtr
+        </button>
+        <button type="button" class="btn btn-info" style="margin-left: 10px;" (click)="resetFilters()">
+          Zresetuj filtr
+        </button>
       </form>
-      <br> 
+      <br />
 
       <div class="row">
         <div *ngFor="let user of users" class="col-lg-2 col-md-4 col-sm-6">
-          <app-user-card [user]='user'></app-user-card>
+          <app-user-card [user]="user"></app-user-card>
         </div>
       </div>
+      <div class="row">
+        <pagination [boundaryLinks]="true" 
+                    [totalItems]="pagination.totalItems" 
+                    [itemsPerPage]="pagination.itemsPerPage"
+                    [(ngModel)]="pagination.currentPage" 
+                    (pageChanged)="pageChanged($event)" 
+                    previousText="&lsaquo;"
+                    nextText="&rsaquo;" 
+                    firstText="&laquo;"
+                    lastText="&raquo;">
+        </pagination>
+        <div class="col">
+          <div class="btn-group float-right">
+            <button btnRadio="lastActive" [(ngModel)]="userParams.orderBy" (click)="loadUsers()" type="button"
+              name="orderBy" class="btn btn-primary">
+              Ostatnio aktywni
+            </button>
 
-      <pagination [boundaryLinks]="true" 
-                  [totalItems]= "pagination.totalItems"
-                  [itemsPerPage] = "pagination.itemsPerPage"
-                  [(ngModel)] = "pagination.currentPage"
-                  (pageChanged)="pageChanged($event)"
-
-                  previousText="&lsaquo;" 
-                  nextText="&rsaquo;"
-                  firstText="&laquo;" 
-                  lastText="&raquo;">
-
-      </pagination>
+            <button btnRadio="created" [(ngModel)]="userParams.orderBy" (click)="loadUsers()" type="button"
+              name="orderBy" class="btn btn-primary">
+              Najnowsi członkowie
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
