@@ -29,5 +29,7 @@ namespace Project.API.Helpers
 
         public string ZodiacSign { get; set; } = "Wszystkie";
 
+        public string  OrderBy { get; set; }
+
     }
 }

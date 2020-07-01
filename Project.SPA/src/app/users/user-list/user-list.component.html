@@ -75,11 +75,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <div *ngFor="let user of users" class="col-lg-2 col-md-4 col-sm-6">
-          <app-user-card [user]="user"></app-user-card><!-- Przekazanie uzytkownika do komponentu app user-->
-        </div>
-      </div>
       <pagination [boundaryLinks]="true" 
                   [totalItems]= "pagination.totalItems"
                   [itemsPerPage] = "pagination.itemsPerPage"
