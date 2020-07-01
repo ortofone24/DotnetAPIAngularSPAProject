@@ -31,5 +31,9 @@ namespace Project.API.Helpers
 
         public string  OrderBy { get; set; }
 
+        public bool UserLikes { get; set; } = false; //uzytkownik lubi
+
+        public bool UserIsLiked { get; set; } = false;
+
     }
 }
