@@ -76,5 +76,11 @@ namespace Project.API.Data
 
             // return mainPhoto;
         }
+
+        public async Task<Like> GetLike(int userId, int recipientId)
+        {
+            // sprawdzamy czy przekazany userID juz czasami nie dał lajka recipientowi
+            return await _context.Likes.FirstOrDefaultAsync(u => u.UserLikesId == userId && u.UserIsLikedId == recipientId);
+        }
     }
 }

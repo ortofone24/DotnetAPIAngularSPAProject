@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project.API.Data;
 using Project.API.Dtos;
 using Project.API.Helpers;
+using Project.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +79,43 @@ namespace Project.API.Controllers
             }
 
             throw new Exception($"Aktualizacja uzytkownika o id: {id} nie powiodła się");
+        }
+
+        [HttpPost("{id}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int id, int recipientId)
+        {
+            // recipientId id uzytkownika ktorego lajkujemy
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var like = await _userRepository.GetLike(id, recipientId);
+
+            if(like != null)
+            {
+                return BadRequest("Już lubisz tego użytkownika");
+            }
+
+            if(await _userRepository.GetUser(recipientId) == null)
+            {
+                return NotFound();
+            }
+
+            like = new Like
+            {
+                UserLikesId = id,
+                UserIsLikedId = recipientId
+            };
+
+            _userRepository.Add<Like>(like);
+
+            if(await _userRepository.SaveAll())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Nie mozna polubic uzytkownika");
         }
 
     }
