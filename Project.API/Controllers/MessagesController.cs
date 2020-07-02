@@ -38,7 +38,7 @@ namespace Project.API.Controllers
 
             var messageFromRepo = await _userRepo.GetMessage(id);
 
-            if(messageFromRepo == null)
+            if (messageFromRepo == null)
             {
                 return NotFound();
             }
@@ -47,7 +47,7 @@ namespace Project.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMessagesForUser(int userId, [FromQuery]MessageParams messageParams)
+        public async Task<IActionResult> GetMessagesForUser(int userId, [FromQuery] MessageParams messageParams)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
@@ -58,9 +58,9 @@ namespace Project.API.Controllers
             var messagesFromRepo = await _userRepo.GetMessagesForUser(messageParams);
             var messagesToReturn = _mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
 
-            Response.AddPagination(messagesFromRepo.CurrentPage, 
+            Response.AddPagination(messagesFromRepo.CurrentPage,
                                    messagesFromRepo.PageSize,
-                                   messagesFromRepo.TotalCount, 
+                                   messagesFromRepo.TotalCount,
                                    messagesFromRepo.TotalPages);
 
             return Ok(messagesToReturn);
@@ -76,26 +76,37 @@ namespace Project.API.Controllers
             }
 
             messageForCreationDto.SenderId = userId;
-
             var recipient = await _userRepo.GetUser(messageForCreationDto.RecipientId);
 
-            if(recipient == null)
+            if (recipient == null)
             {
                 return BadRequest("Nie można znalesc uzytkownika");
             }
 
             var message = _mapper.Map<Message>(messageForCreationDto);
-
             _userRepo.Add(message);
-
             var messageToReturn = _mapper.Map<MessageForCreationDto>(message);
 
-            if(await _userRepo.SaveAll())
+            if (await _userRepo.SaveAll())
             {
-                return CreatedAtRoute("GetMessage", new { id = message.Id}, messageToReturn);
+                return CreatedAtRoute("GetMessage", new { id = message.Id }, messageToReturn);
             }
 
             throw new Exception("Utworzenie wiadomości nie powiodło się przy zapisie");
+        }
+
+        [HttpGet("thread/{recipientId}")]
+        public async Task<IActionResult> GetMessageThread(int userId, int recipientId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var messagesFromRepo = await _userRepo.GetMessageThread(userId, recipientId);
+            var messageThread = _mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
+
+            return Ok(messageThread);
         }
     }
 }
