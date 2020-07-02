@@ -58,5 +58,9 @@ namespace Project.API.Models
         public ICollection<Like> UserLikes { get; set; }    // użytkownik lubi
 
         public ICollection<Like> UserIsLiked { get; set; }  // użytkownik jest lubiany
+
+        public ICollection<Message> MessagesSent { get; set; } // wiadomosci wyslane
+
+        public ICollection<Message> MessagesRecived { get; set; } // wiadomosci odebrane
     }
 }
