@@ -46,6 +46,26 @@ namespace Project.API.Controllers
             return Ok(messageFromRepo);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMessagesForUser(int userId, [FromQuery]MessageParams messageParams)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            messageParams.UserId = userId;
+            var messagesFromRepo = await _userRepo.GetMessagesForUser(messageParams);
+            var messagesToReturn = _mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
+
+            Response.AddPagination(messagesFromRepo.CurrentPage, 
+                                   messagesFromRepo.PageSize,
+                                   messagesFromRepo.TotalCount, 
+                                   messagesFromRepo.TotalPages);
+
+            return Ok(messagesToReturn);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, MessageForCreationDto messageForCreationDto)
         {
