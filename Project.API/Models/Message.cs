@@ -18,7 +18,7 @@ namespace Project.API.Models
         public bool IsRead { get; set; }
 
         public DateTime? DataRead { get; set; }
-        public DateTime DataSend { get; set; }
+        public DateTime DateSent { get; set; }
 
 
         public bool SenderDeleted { get; set; }

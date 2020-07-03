@@ -21,7 +21,7 @@ namespace Project.API.Dtos
         public bool IsRead { get; set; }
 
         public DateTime? DataRead { get; set; }
-        public DateTime DataSend { get; set; }
+        public DateTime DateSent { get; set; }
 
     }
 }

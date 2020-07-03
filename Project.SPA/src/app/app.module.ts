@@ -38,6 +38,7 @@ import { PhotosComponent } from './users/photos/photos.component';
 import { TimeAgoPipe } from './_pipes/time-age-pipe';
 import { LikesResolver } from './_resolvers/likes.resolver';
 import { MessagesResolver } from './_resolvers/message.resolver';
+import { UserMessagesComponent } from './users/user-messages/user-messages.component';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -64,7 +65,8 @@ export function tokenGetter() {
       UserDetailComponent,
       UserEditComponent,
       PhotosComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+      UserMessagesComponent
    ],
    imports: [
       BrowserModule,

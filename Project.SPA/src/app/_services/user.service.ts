@@ -13,6 +13,7 @@ import { Message } from '../_models/message';
 //   })
 // };
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +22,8 @@ export class UserService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
+
+
 
   // moja stara metoda
   // getUsers(page?, itemsPerPage? ): Observable<PaginationResult<User[]>> {
@@ -110,7 +113,38 @@ export class UserService {
     return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId, {});
   }
 
+  // getMessages(id: number, page?, itemsPerPage?, messageContainer?) {
+  //   const paginationResult: PaginationResult<Message[]> = new PaginationResult<Message[]>();
+  //   let params = new HttpParams();
+
+  //   params = params.append('MessageContainer', messageContainer);
+
+  //   if (page != null && itemsPerPage != null) {
+  //     params = params.append('pageNumber', page);
+  //     params = params.append('pageSize', itemsPerPage);
+  //   }
+
+  //   return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', { observe: 'response', params })
+  //   .pipe(
+  //     map(response => {
+  //       paginationResult.result = response.body;
+
+  //       if (response.headers.get('Pagination') != null) {
+  //         paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+  //       }
+
+  //       return paginationResult;
+  //     })
+  //   );
+
+  // }
+
+  // getMessageThread(id: number, recipientId: number) {
+  //   return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId);
+  // }
+
   getMessages(id: number, page?, itemsPerPage?, messageContainer?) {
+
     const paginationResult: PaginationResult<Message[]> = new PaginationResult<Message[]>();
     let params = new HttpParams();
 
@@ -122,18 +156,32 @@ export class UserService {
     }
 
     return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', { observe: 'response', params })
-    .pipe(
-      map(response => {
-        paginationResult.result = response.body;
+      .pipe(
+        map(response => {
+          paginationResult.result = response.body;
 
-        if (response.headers.get('Pagination') != null) {
-          paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
-        }
+          if (response.headers.get('Pagination') != null) {
+            paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
 
-        return paginationResult;
-      })
-    );
-
+          return paginationResult;
+        })
+      );
   }
 
+  getMessageThread(id: number, recipientId: number) {
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId);
+  }
+
+  sendMessage(id: number, message: Message) {
+    return this.http.post(this.baseUrl + 'users/' + id + '/messages', message);
+  }
+
+  deleteMessage(id: number, userId: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id, {});
+  }
+
+  markAsRead(userId: number, messageId: number) {
+    this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {}).subscribe();
+  }
 }

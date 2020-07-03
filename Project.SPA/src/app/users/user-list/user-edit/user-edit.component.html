@@ -139,6 +139,9 @@
                           (getUserPhotoChange)="updateMainPhoto($event)">
               </app-photos>
             </tab>
+            <tab heading="Wiadomości">
+              <app-user-messages [recipientId]="user.id"></app-user-messages>
+            </tab>
           </tabset>
         </div>
       </form>

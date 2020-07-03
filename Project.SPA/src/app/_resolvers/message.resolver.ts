@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { AlertifyService } from '../_services/alertify.service';
@@ -14,24 +14,19 @@ export class MessagesResolver implements Resolve<Message[]> {
     pageSize = 12;
     messageContainer = 'Nieprzeczytane';
 
-
     constructor(private userService: UserService,
                 private router: Router,
                 private alertify: AlertifyService,
-                private authService: AuthService) { }
-
+                private authService: AuthService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Message[]> {
         return this.userService.getMessages(this.authService.decodedToken.nameid,
-                                            this.pageNumber,
-                                            this.pageSize,
-                                            this.messageContainer).pipe(
+                                            this.pageNumber, this.pageSize, this.messageContainer).pipe(
             catchError(error => {
-                this.alertify.error('Problem z wyszukiwaniem wiadomosci');
+                this.alertify.error('Problem z wyszukiwaniem wiadomości');
                 this.router.navigate(['/home']);
                 return of(null);
             })
         );
     }
-
 }
